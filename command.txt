@@ -1,0 +1,13 @@
+# Проверка работы сервера без клиента
+telnet localhost 8888
+hello
+
+docker build . -t avers66/socket-client
+docker run  --rm --name socket-client  socket-client
+
+#Передаем программе клиента внутри контейнера значение переменной с IP сервера
+docker run  --rm --name socket-client -e SOCKET_SERVER_HOST=172.17.0.2 avers66/socket-client
+
+
+#С поддержкой сети
+docker run  --rm --name socket-client -e SOCKET_SERVER_HOST=socket-server --network socket-network avers66/socket-client
